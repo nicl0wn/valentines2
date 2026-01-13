@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Isabel</title>
+    <style>
+        :root {
+            --primary: #ff6b9d;
+            --secondary: #c44569;
+            --accent: #ffd700;
+            --light: #fff5f7;
+            --dark: #2c2c2c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px 30px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            min-height: 450px; /* Increased slightly for the letter */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Screen Visibilities */
+        .screen {
+            display: none;
+            animation: slideIn 0.6s ease-out;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typography */
+        h1, h3 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        h1 { font-size: 28px; }
+        h3 { font-size: 24px; margin-bottom: 25px; }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Specific style for the love letter */
+        .love-letter {
+            background-color: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            color: #444;
+            font-size: 16px;
+            line-height: 1.6;
+            text-align: left; /* Easier to read */
+            margin-bottom: 30px;
+            border: 1px dashed var(--primary);
+            width: 100%;
+        }
+
+        .heart {
+            font-size: 60px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+        }
+
+        /* Buttons */
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 120px;
+        }
+
+        .btn-yes, .btn-next {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 18px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-yes:hover, .btn-next:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-no {
+            background: #ffccdd;
+            color: var(--secondary);
+            position: relative;
+        }
+
+        /* Dinner Options */
+        .dinner-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dinner-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .dinner-card:hover { transform: translateY(-3px); }
+        
+        .dinner-card.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .dinner-card h3 { color: white; font-size: 18px; margin-bottom: 5px; }
+        .dinner-card p { font-size: 13px; opacity: 0.9; margin: 0; }
+        .emoji { font-size: 24px; margin-bottom: 5px; }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .btn-back {
+            background: #e0e0e0;
+            color: #333;
+            padding: 10px 20px;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .restaurant-choice {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            color: var(--secondary);
+            font-size: 18px;
+            width: 100%;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            h1 { font-size: 24px; }
+            .love-letter { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="screen active" id="introScreen">
+            <div class="heart">💌</div>
+            <h3>Hey there!</h3>
+            <p class="subtitle">I have something important I want to tell you...</p>
+            <button class="btn-next" onclick="showMessage()">Next</button>
+        </div>
+
+        <div class="screen" id="messageScreen">
+            <h3>Read this first...</h3>
+            <div class="love-letter">
+                Hello my lovely Isabel.<br><br>
+                I'm writing this note as an appreciation of what you've done for me. Thank you for always being by my side. Thank you for planning our overseas trip. Thank you for teaching me about life and finally, thank you for loving me.<br><br>
+                This near 2 years relationship has taught me a lot about love and it's all thanks to you.
+            </div>
+            <button class="btn-next" onclick="showQuestion()">Next</button>
+        </div>
+
+        <div class="screen" id="questionScreen">
+            <div class="heart">💕</div>
+            <p class="subtitle">So, I have one question for you...</p>
+            <h1>Will you be my Valentine?</h1>
+            <div class="button-container">
+                <button class="btn-yes" id="yesBtn">YES!</button>
+                <button class="btn-no" id="noBtn">No</button>
+            </div>
+        </div>
+
+        <div class="screen" id="dinnerScreen">
+            <h3 style="margin-bottom: 20px;">Where should we go? 🍽️</h3> 
+            <div class="dinner-options">
+                <div class="dinner-card" data-restaurant="Salt and Soul" onclick="selectDinner(this)">
+                    <div class="emoji">🍷</div>
+                    <h3>Salt and Soul</h3>
+                    <p>Cozy vibes</p>
+                </div>
+                <div class="dinner-card" data-restaurant="Wildseed Cafe" onclick="selectDinner(this)">
+                    <div class="emoji">🌿</div>
+                    <h3>Wildseed Cafe</h3>
+                    <p>Nature & chill</p>
+                </div>
+                <div class="dinner-card" data-restaurant="Glasshouse @ CHIJMES" onclick="selectDinner(this)">
+                    <div class="emoji">✨</div>
+                    <h3>Glasshouse</h3>
+                    <p>Beautiful architecture</p>
+                </div>
+            </div>
+            <button class="btn-confirm" id="confirmBtn" onclick="confirmDinner()" style="display: none;">Confirm Choice</button>
+            <button class="btn-back" onclick="goBack()">Go Back</button>
+        </div>
+
+        <div class="screen" id="finalScreen">
+            <div class="heart">💖</div>
+            <p class="subtitle" style="font-weight: bold; font-size: 24px;">It's a Date!</p>
+            <div class="restaurant-choice" id="restaurantChoice"></div>
+            <p style="color: #666; font-size: 16px;">I can't wait to spend Valentine's Day with you! 💕</p>
+            <button class="btn-confirm" onclick="reset()">Start Over</button>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const screens = {
+            intro: document.getElementById('introScreen'),
+            message: document.getElementById('messageScreen'),
+            question: document.getElementById('questionScreen'),
+            dinner: document.getElementById('dinnerScreen'),
+            final: document.getElementById('finalScreen')
+        };
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        let selectedDinner = null;
+
+        // --- Navigation Functions ---
+        function showScreen(screenName) {
+            Object.values(screens).forEach(screen => screen.classList.remove('active'));
+            screens[screenName].classList.add('active');
+        }
+
+        function showMessage() { showScreen('message'); }
+        function showQuestion() { showScreen('question'); }
+        
+        function goBack() {
+            showScreen('question');
+            selectedDinner = null;
+            confirmBtn.style.display = 'none';
+            document.querySelectorAll('.dinner-card').forEach(card => card.classList.remove('selected'));
+        }
+
+        function reset() {
+            showScreen('intro');
+            selectedDinner = null;
+            confirmBtn.style.display = 'none';
+            document.querySelectorAll('.dinner-card').forEach(card => card.classList.remove('selected'));
+        }
+
+        // --- Interaction Logic ---
+        yesBtn.addEventListener('click', function() {
+            showScreen('dinner');
+            triggerConfetti();
+        });
+
+        // "No" Button Run Away
+        noBtn.addEventListener('mouseenter', moveNoButton);
+        noBtn.addEventListener('touchstart', moveNoButton);
+
+        function moveNoButton() {
+            const maxX = window.innerWidth - 150;
+            const maxY = window.innerHeight - 50;
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
+            noBtn.style.zIndex = '9999';
+        }
+
+        // Dinner Selection
+        function selectDinner(element) {
+            document.querySelectorAll('.dinner-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedDinner = element.getAttribute('data-restaurant');
+            confirmBtn.style.display = 'block';
+        }
+
+        function confirmDinner() {
+            if (selectedDinner) {
+                showScreen('final');
+                document.getElementById('restaurantChoice').textContent = `We're going to: ${selectedDinner} 🎉`;
+                triggerConfetti();
+            }
+        }
+
+        // --- Confetti ---
+        function triggerConfetti() {
+            const confettiPieces = 50;
+            for (let i = 0; i < confettiPieces; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = ['#667eea', '#764ba2', '#ffd700'][Math.floor(Math.random() * 3)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = '-10px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.zIndex = '1000';
+                confetti.style.pointerEvents = 'none';
+                document.body.appendChild(confetti);
+
+                const duration = Math.random() * 2 + 2;
+                confetti.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: duration * 1000,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                });
+
+                setTimeout(() => confetti.remove(), duration * 1000);
+            }
+        }
+
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.btn-no')) e.preventDefault();
+        }, { passive: false });
+    </script>
+</body>
+</html>
